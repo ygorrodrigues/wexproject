@@ -6,6 +6,9 @@ import com.ygorrodrigues.wexproject.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class PurchaseService {
     
@@ -22,5 +25,10 @@ public class PurchaseService {
         Purchase savedPurchase = purchaseRepository.save(purchase);
 
         return savedPurchase;
+    }
+    
+    public Purchase findById(UUID id) {
+        Optional<Purchase> purchase = purchaseRepository.findById(id);
+        return purchase.orElse(null);
     }
 }
