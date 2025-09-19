@@ -1,14 +1,19 @@
 package com.ygorrodrigues.wexproject.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.ygorrodrigues.wexproject.exception.CurrencyNotFoundException;
 import com.ygorrodrigues.wexproject.models.ExchangeRateApiResponse;
 import com.ygorrodrigues.wexproject.models.ExchangeRateData;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.ResponseEntity;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
+import com.ygorrodrigues.wexproject.models.ExchangeRateResponse;
+import com.ygorrodrigues.wexproject.models.Purchase;
 
 @Service
 public class ExchangeRateService {
@@ -18,6 +23,29 @@ public class ExchangeRateService {
     
     public ExchangeRateService() {
         this.restTemplate = new RestTemplate();
+    }
+
+    public ExchangeRateResponse calculateExchangeRate(String countryCurrency, Purchase purchase) {
+        try {
+            BigDecimal exchangeRate = getExchangeRate(countryCurrency, purchase.getTransactionDate());
+            BigDecimal convertedAmount = purchase.getAmount().multiply(exchangeRate)
+                .setScale(2, RoundingMode.HALF_UP); // Round to 2 decimal places (cents)
+            
+            return new ExchangeRateResponse(
+                purchase.getId(),
+                purchase.getDescription(),
+                purchase.getTransactionDate(),
+                purchase.getAmount(),
+                "USD",
+                convertedAmount,
+                countryCurrency,
+                exchangeRate
+            );
+        } catch (CurrencyNotFoundException e) {
+            throw new CurrencyNotFoundException("Purchase cannot be converted to the target currency: " + countryCurrency);
+        } catch (Exception e) {
+            throw new CurrencyNotFoundException("Unable to fetch exchange rate for currency: " + countryCurrency);
+        }
     }
     
     public BigDecimal getExchangeRate(String countryCurrency, LocalDate transactionDate) {

@@ -41,25 +41,11 @@ public class PurchaseController {
         }
         
         try {
-            BigDecimal exchangeRate = exchangeRateService.getExchangeRate(countryCurrency, purchase.getTransactionDate());
-            BigDecimal convertedAmount = purchase.getAmount().multiply(exchangeRate)
-                .setScale(2, RoundingMode.HALF_UP); // Round to 2 decimal places (cents)
-            
-            ExchangeRateResponse response = new ExchangeRateResponse(
-                purchase.getId(),
-                purchase.getDescription(),
-                purchase.getTransactionDate(),
-                purchase.getAmount(),
-                "USD",
-                convertedAmount,
-                countryCurrency,
-                exchangeRate
-            );
-            
+            ExchangeRateResponse response = exchangeRateService.calculateExchangeRate(countryCurrency, purchase);
             return ResponseEntity.ok(response);
         } catch (CurrencyNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Purchase cannot be converted to the target currency: " + e.getMessage());
+                .body("Error: " + e.getMessage());
         }
     }
 }
