@@ -1,5 +1,6 @@
 package com.ygorrodrigues.wexproject.service;
 
+import com.ygorrodrigues.wexproject.exception.CurrencyNotFoundException;
 import com.ygorrodrigues.wexproject.models.ExchangeRateApiResponse;
 import com.ygorrodrigues.wexproject.models.ExchangeRateData;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,15 @@ public class ExchangeRateService {
                 return new BigDecimal(exchangeRateStr);
             }
             
-            return BigDecimal.ONE; // Default to 1:1 if no rate found
+            // Throw exception if no exchange rate data is found
+            throw new CurrencyNotFoundException("Exchange rate data not found for currency: " + countryCurrency);
+        } catch (CurrencyNotFoundException e) {
+            // Re-throw currency not found exceptions
+            throw e;
         } catch (Exception e) {
-            // Log error and return default rate
+            // Log error and throw wrapped exception for other errors
             System.err.println("Error fetching exchange rate: " + e.getMessage());
-            return BigDecimal.ONE;
+            throw new CurrencyNotFoundException("Unable to fetch exchange rate for currency: " + countryCurrency, e);
         }
     }
 }
