@@ -4,10 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PurchaseRequest {
     
     @NotBlank(message = "Description is required")
@@ -21,37 +27,4 @@ public class PurchaseRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate transactionDate;
     
-    // Constructors
-    public PurchaseRequest() {}
-    
-    public PurchaseRequest(String description, BigDecimal amount, LocalDate transactionDate) {
-        this.description = description;
-        this.amount = amount;
-        this.transactionDate = transactionDate;
-    }
-    
-    // Getters and Setters
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    
-    public LocalDate getTransactionDate() {
-        return transactionDate;
-    }
-    
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
 }

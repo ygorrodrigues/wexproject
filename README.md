@@ -225,9 +225,6 @@ curl "http://localhost:8080/purchase/1/exchange?countryCurrency=Canada-Dollar"
 ## TODO
 - Review error response for exchange rate not found in 6 months
 - Review unit tests
-- Proper usage of lombok
 - Add and/or verify test fixtures for currencies, with some that has within 6 months and others dont
 - Integration tests using the api
-- Review the solution and architecture
-- Write a better readme with how to run
 - Review how to be a production ready

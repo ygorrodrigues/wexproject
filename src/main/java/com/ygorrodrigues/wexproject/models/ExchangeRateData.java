@@ -2,6 +2,15 @@ package com.ygorrodrigues.wexproject.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExchangeRateData {
     
     @JsonProperty("country_currency_desc")
@@ -12,38 +21,5 @@ public class ExchangeRateData {
     
     @JsonProperty("record_date")
     private String recordDate;
-    
-    // Constructors
-    public ExchangeRateData() {}
-    
-    public ExchangeRateData(String countryCurrencyDesc, String exchangeRate, String recordDate) {
-        this.countryCurrencyDesc = countryCurrencyDesc;
-        this.exchangeRate = exchangeRate;
-        this.recordDate = recordDate;
-    }
-    
-    // Getters and Setters
-    public String getCountryCurrencyDesc() {
-        return countryCurrencyDesc;
-    }
-    
-    public void setCountryCurrencyDesc(String countryCurrencyDesc) {
-        this.countryCurrencyDesc = countryCurrencyDesc;
-    }
-    
-    public String getExchangeRate() {
-        return exchangeRate;
-    }
-    
-    public void setExchangeRate(String exchangeRate) {
-        this.exchangeRate = exchangeRate;
-    }
-    
-    public String getRecordDate() {
-        return recordDate;
-    }
-    
-    public void setRecordDate(String recordDate) {
-        this.recordDate = recordDate;
-    }
+
 }

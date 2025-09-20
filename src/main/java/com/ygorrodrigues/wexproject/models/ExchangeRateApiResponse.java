@@ -1,26 +1,19 @@
 package com.ygorrodrigues.wexproject.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExchangeRateApiResponse {
     
     @JsonProperty("data")
     private List<ExchangeRateData> data;
     
-    // Constructors
-    public ExchangeRateApiResponse() {}
-    
-    public ExchangeRateApiResponse(List<ExchangeRateData> data) {
-        this.data = data;
-    }
-    
-    // Getters and Setters
-    public List<ExchangeRateData> getData() {
-        return data;
-    }
-    
-    public void setData(List<ExchangeRateData> data) {
-        this.data = data;
-    }
 }

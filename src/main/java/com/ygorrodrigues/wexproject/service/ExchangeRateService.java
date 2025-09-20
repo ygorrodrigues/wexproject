@@ -3,7 +3,7 @@ package com.ygorrodrigues.wexproject.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,18 +63,13 @@ public class ExchangeRateService {
             
             ResponseEntity<ExchangeRateApiResponse> response = restTemplate.getForEntity(url, ExchangeRateApiResponse.class);
             
-            if (response.getBody() != null && response.getBody().getData() != null && !response.getBody().getData().isEmpty()) {
-                List<ExchangeRateData> data = response.getBody().getData();
-                
-                // Get the most recent exchange rate (first item since we sorted by -record_date)
-                ExchangeRateData latestRate = data.get(0);
-                String exchangeRateStr = latestRate.getExchangeRate();
-                
-                return new BigDecimal(exchangeRateStr);
-            }
-            
-            // Throw exception if no exchange rate data is found
-            throw new CurrencyNotFoundException("Exchange rate data not found for currency: " + countryCurrency);
+            return Optional.ofNullable(response.getBody())
+                .map(ExchangeRateApiResponse::getData)
+                .filter(data -> data != null && !data.isEmpty())
+                .map(data -> data.get(0))
+                .map(ExchangeRateData::getExchangeRate)
+                .map(BigDecimal::new)
+                .orElseThrow(() -> new CurrencyNotFoundException("Exchange rate data not found for currency: " + countryCurrency));
         } catch (CurrencyNotFoundException e) {
             // Re-throw currency not found exceptions
             throw e;

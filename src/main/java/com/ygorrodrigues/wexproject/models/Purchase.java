@@ -4,12 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "purchases")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Purchase {
     
     @Id
@@ -29,45 +35,10 @@ public class Purchase {
     @Column(nullable = false)
     private LocalDate transactionDate;
     
-    // Constructors
-    public Purchase() {}
-    
     public Purchase(String description, BigDecimal amount, LocalDate transactionDate) {
         this.description = description;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
     
-    // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    
-    public LocalDate getTransactionDate() {
-        return transactionDate;
-    }
-    
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
 }
