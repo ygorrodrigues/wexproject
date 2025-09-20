@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class ExchangeRateResponse {
     
-    private UUID id;
+    private Integer id;
     private String description;
     private LocalDate transactionDate;
     private BigDecimal originalAmount;
@@ -18,7 +18,7 @@ public class ExchangeRateResponse {
     // Constructors
     public ExchangeRateResponse() {}
     
-    public ExchangeRateResponse(UUID id, String description, LocalDate transactionDate,
+    public ExchangeRateResponse(Integer id, String description, LocalDate transactionDate,
                               BigDecimal originalAmount, String originalCurrency,
                               BigDecimal convertedAmount, String targetCurrency,
                               BigDecimal exchangeRate) {
@@ -32,68 +32,37 @@ public class ExchangeRateResponse {
         this.exchangeRate = exchangeRate;
     }
     
-    // Getters and Setters
-    public UUID getId() {
+    // Getters
+    public Integer getId() {
         return id;
-    }
-    
-    public void setId(UUID id) {
-        this.id = id;
     }
     
     public String getDescription() {
         return description;
     }
     
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
     public LocalDate getTransactionDate() {
         return transactionDate;
-    }
-    
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
     }
     
     public BigDecimal getOriginalAmount() {
         return originalAmount;
     }
     
-    public void setOriginalAmount(BigDecimal originalAmount) {
-        this.originalAmount = originalAmount;
-    }
-    
     public String getOriginalCurrency() {
         return originalCurrency;
-    }
-    
-    public void setOriginalCurrency(String originalCurrency) {
-        this.originalCurrency = originalCurrency;
     }
     
     public BigDecimal getConvertedAmount() {
         return convertedAmount;
     }
     
-    public void setConvertedAmount(BigDecimal convertedAmount) {
-        this.convertedAmount = convertedAmount;
-    }
-    
     public String getTargetCurrency() {
         return targetCurrency;
-    }
-    
-    public void setTargetCurrency(String targetCurrency) {
-        this.targetCurrency = targetCurrency;
     }
     
     public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
     
-    public void setExchangeRate(BigDecimal exchangeRate) {
-        this.exchangeRate = exchangeRate;
-    }
 }

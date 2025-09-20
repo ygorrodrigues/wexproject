@@ -7,15 +7,14 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "purchases")
 public class Purchase {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     
     @NotBlank(message = "Description is required")
     @Column(nullable = false)
@@ -40,11 +39,11 @@ public class Purchase {
     }
     
     // Getters and Setters
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
     
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     

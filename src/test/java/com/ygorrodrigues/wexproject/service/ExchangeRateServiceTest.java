@@ -33,11 +33,11 @@ class ExchangeRateServiceTest {
     private Purchase testPurchase;
     private ExchangeRateApiResponse mockApiResponse;
     private ExchangeRateData mockExchangeRateData;
-    private UUID testId;
+    private Integer testId;
 
     @BeforeEach
     void setUp() {
-        testId = UUID.randomUUID();
+        testId = 1;
         testPurchase = new Purchase(
             "Test Purchase",
             new BigDecimal("100.00"),

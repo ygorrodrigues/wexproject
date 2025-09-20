@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.UUID;
 
 @RestController
 public class PurchaseController {
@@ -32,7 +29,7 @@ public class PurchaseController {
     
     @GetMapping("/purchase/{id}/exchange")
     public ResponseEntity<?> getExchangeRate(
-            @PathVariable UUID id,
+            @PathVariable Integer id,
             @RequestParam String countryCurrency) {
         
         Purchase purchase = purchaseService.findById(id);

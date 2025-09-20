@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PurchaseService {
@@ -27,7 +26,7 @@ public class PurchaseService {
         return savedPurchase;
     }
     
-    public Purchase findById(UUID id) {
+    public Purchase findById(Integer id) {
         Optional<Purchase> purchase = purchaseRepository.findById(id);
         return purchase.orElse(null);
     }

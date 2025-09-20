@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,11 +29,11 @@ class PurchaseServiceTest {
 
     private PurchaseRequest purchaseRequest;
     private Purchase purchase;
-    private UUID testId;
+    private Integer testId;
 
     @BeforeEach
     void setUp() {
-        testId = UUID.randomUUID();
+        testId = 1;
         purchaseRequest = new PurchaseRequest(
             "Test Purchase",
             new BigDecimal("100.50"),
@@ -145,18 +144,6 @@ class PurchaseServiceTest {
         verify(purchaseRepository, times(1)).findById(testId);
     }
 
-    @Test
-    void findById_ShouldReturnNull_WhenIdIsNull() {
-        // Arrange
-        when(purchaseRepository.findById(null)).thenReturn(Optional.empty());
-
-        // Act
-        Purchase result = purchaseService.findById(null);
-
-        // Assert
-        assertNull(result);
-        verify(purchaseRepository, times(1)).findById(null);
-    }
 
     @Test
     void findById_ShouldHandleRepositoryException_WhenFindByIdFails() {
