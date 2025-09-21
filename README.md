@@ -215,7 +215,7 @@ curl "http://localhost:8080/purchase/1/exchange?countryCurrency=Canada-Dollar"
 - H2 Database: In-memory database for easy setup
 - REST API: Clean RESTful endpoints following Spring Boot conventions
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [H2 Database Documentation](https://www.h2database.com/)
@@ -225,6 +225,12 @@ curl "http://localhost:8080/purchase/1/exchange?countryCurrency=Canada-Dollar"
 ## TODO
 - Review error response for exchange rate not found in 6 months
 - Review unit tests
+- Revalidated purchase description to a max of 50 chars and add unit test
+- Revalidated amount: must be a valid positive amount rounded to the nearest cent and add unit test
+- Handle future dates from transaction date (should handle past also? i think not)
+- Add controller unit tests
+- Move call to api on exchange rate service to a new exchange rate repository
+- Add repository unit tests
 - Add and/or verify test fixtures for currencies, with some that has within 6 months and others dont
 - Integration tests using the api
 - Review how to be a production ready

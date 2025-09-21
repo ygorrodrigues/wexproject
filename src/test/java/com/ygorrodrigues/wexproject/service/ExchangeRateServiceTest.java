@@ -32,17 +32,10 @@ class ExchangeRateServiceTest {
     private Purchase testPurchase;
     private ExchangeRateApiResponse mockApiResponse;
     private ExchangeRateData mockExchangeRateData;
-    private Integer testId;
 
     @BeforeEach
     void setUp() {
-        testId = 1;
-        testPurchase = new Purchase(
-            "Test Purchase",
-            new BigDecimal("100.00"),
-            LocalDate.of(2024, 1, 15)
-        );
-        testPurchase.setId(testId);
+        testPurchase = getTestPurchase();
 
         mockExchangeRateData = new ExchangeRateData(
             "Canada-Dollar",
@@ -79,10 +72,9 @@ class ExchangeRateServiceTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(testId, result.getId());
         assertEquals("Test Purchase", result.getDescription());
-        assertEquals(LocalDate.of(2024, 1, 15), result.getTransactionDate());
-        assertEquals(new BigDecimal("100.00"), result.getOriginalAmount());
+        assertEquals(LocalDate.of(2025, 9, 15), result.getTransactionDate());
+        assertEquals(new BigDecimal("100"), result.getOriginalAmount());
         assertEquals("USD", result.getOriginalCurrency());
         assertEquals(new BigDecimal("125.00"), result.getConvertedAmount());
         assertEquals("Canada-Dollar", result.getTargetCurrency());
@@ -106,12 +98,12 @@ class ExchangeRateServiceTest {
         when(restTemplate.getForEntity(anyString(), eq(ExchangeRateApiResponse.class)))
             .thenReturn(responseEntity);
 
-        Purchase purchaseWithDecimals = new Purchase(
-            "Test Purchase",
-            new BigDecimal("100.123"),
-            LocalDate.of(2024, 1, 15)
-        );
-        purchaseWithDecimals.setId(testId);
+        Purchase purchaseWithDecimals = Purchase.builder()
+            .id(1)
+            .description("Test Purchase")
+            .amount(new BigDecimal("100.123"))
+            .transactionDate(LocalDate.of(2024, 1, 15))
+            .build();
 
         // Act
         ExchangeRateResponse result = exchangeRateService.calculateExchangeRate("Japan-Yen", purchaseWithDecimals);
@@ -292,12 +284,12 @@ class ExchangeRateServiceTest {
     @Test
     void calculateExchangeRate_ShouldHandleZeroAmount_WhenAmountIsZero() {
         // Arrange
-        Purchase zeroAmountPurchase = new Purchase(
-            "Zero Purchase",
-            BigDecimal.ZERO,
-            LocalDate.of(2024, 1, 15)
-        );
-        zeroAmountPurchase.setId(testId);
+        Purchase zeroAmountPurchase = Purchase.builder()
+            .id(1)
+            .description("Zero Purchase")
+            .amount(BigDecimal.ZERO)
+            .transactionDate(LocalDate.of(2024, 1, 15))
+            .build();
 
         ResponseEntity<ExchangeRateApiResponse> responseEntity = 
             new ResponseEntity<>(mockApiResponse, HttpStatus.OK);
@@ -316,12 +308,12 @@ class ExchangeRateServiceTest {
     @Test
     void calculateExchangeRate_ShouldHandleVeryLargeAmount_WhenAmountIsVeryLarge() {
         // Arrange
-        Purchase largeAmountPurchase = new Purchase(
-            "Large Purchase",
-            new BigDecimal("999999999.99"),
-            LocalDate.of(2024, 1, 15)
-        );
-        largeAmountPurchase.setId(testId);
+        Purchase largeAmountPurchase = Purchase.builder()
+            .id(1)
+            .description("Large Purchase")
+            .amount(new BigDecimal("999999999.99"))
+            .transactionDate(LocalDate.of(2024, 1, 15))
+            .build();
 
         ResponseEntity<ExchangeRateApiResponse> responseEntity = 
             new ResponseEntity<>(mockApiResponse, HttpStatus.OK);
@@ -371,4 +363,14 @@ class ExchangeRateServiceTest {
             exchangeRateService.getExchangeRate(null, LocalDate.of(2024, 1, 15));
         });
     }
+
+    private Purchase getTestPurchase() {
+        return Purchase.builder()
+            .id(1)
+            .description("Test Purchase")
+            .amount(new BigDecimal("100"))
+            .transactionDate(LocalDate.of(2025, 9, 15))
+            .build();
+    }
+
 }

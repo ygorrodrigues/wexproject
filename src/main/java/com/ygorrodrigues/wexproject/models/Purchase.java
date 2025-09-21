@@ -1,12 +1,14 @@
 package com.ygorrodrigues.wexproject.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,24 +16,20 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "purchases")
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Purchase {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotBlank(message = "Description is required")
     @Column(nullable = false)
     private String description;
     
-    @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be positive")
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
     
-    @NotNull(message = "Transaction date is required")
     @Column(nullable = false)
     private LocalDate transactionDate;
     
