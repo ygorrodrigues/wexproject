@@ -106,8 +106,8 @@ Content-Type: application/json
 
 {
   "description": "Sample Purchase",
-  "amount": 100.50,
-  "transactionDate": "2024-01-15"
+  "amount": 100,
+  "transactionDate": "2025-09-15"
 }
 ```
 
@@ -116,8 +116,8 @@ Content-Type: application/json
 {
   "id": 1,
   "description": "Sample Purchase",
-  "amount": 100.50,
-  "transactionDate": "2024-01-15"
+  "amount": 100,
+  "transactionDate": "2025-09-15"
 }
 ```
 
@@ -138,8 +138,8 @@ GET /purchase/{id}/exchange?countryCurrency=Mexico-Peso
   "convertedAmount": 1700.85,
   "convertedCurrency": "MXN",
   "exchangeRate": 16.93,
-  "transactionDate": "2024-01-15",
-  "conversionDate": "2024-01-15"
+  "transactionDate": "2025-09-15",
+  "conversionDate": "2025-09-15"
 }
 ```
 
@@ -199,7 +199,7 @@ curl -X POST http://localhost:8080/purchase \
   -d '{
     "description": "Office Supplies",
     "amount": 250.75,
-    "transactionDate": "2024-01-15"
+    "transactionDate": "2025-09-15"
   }'
 ```
 
