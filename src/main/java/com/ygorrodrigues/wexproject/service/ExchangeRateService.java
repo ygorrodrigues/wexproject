@@ -50,7 +50,6 @@ public class ExchangeRateService {
     
     public BigDecimal getExchangeRate(String countryCurrency, LocalDate transactionDate) {
         try {
-            // Calculate 6 months before transaction date
             LocalDate sixMonthsBefore = transactionDate.minusMonths(6);
             
             String url = EXCHANGE_RATE_API_URL + 
@@ -58,7 +57,7 @@ public class ExchangeRateService {
                 "&filter=country_currency_desc:eq:" + countryCurrency +
                 ",record_date:gte:" + sixMonthsBefore.toString() +
                 "&sort=-record_date" +
-                "&page[size]=5" +
+                "&page[size]=1" + // Only need the first result, since it is ordered
                 "&page[number]=1";
             
             ResponseEntity<ExchangeRateApiResponse> response = restTemplate.getForEntity(url, ExchangeRateApiResponse.class);

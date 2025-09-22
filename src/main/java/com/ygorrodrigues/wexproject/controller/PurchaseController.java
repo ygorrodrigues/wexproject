@@ -29,8 +29,8 @@ public class PurchaseController {
     
     @GetMapping("/purchase/{id}/exchange")
     public ResponseEntity<?> getExchangeRate(
-            @PathVariable Integer id,
-            @RequestParam String countryCurrency) {
+            @PathVariable("id") Integer id,
+            @RequestParam("countryCurrency") String countryCurrency) {
         
         Purchase purchase = purchaseService.findById(id);
         if (purchase == null) {
