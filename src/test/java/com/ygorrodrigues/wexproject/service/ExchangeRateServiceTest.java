@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -179,6 +180,26 @@ class ExchangeRateServiceTest {
         assertThrows(Exception.class, () -> {
             exchangeRateService.getExchangeRate(null, LocalDate.of(2025, 9, 15));
         });
+    }
+
+    @Test
+    void getExchangeRate_ShouldIncludeGteAndLteDateFiltersInUrl() {
+        LocalDate txDate = LocalDate.of(2025, 9, 15);
+        LocalDate sixMonthsBefore = txDate.minusMonths(6);
+        ResponseEntity<ExchangeRateApiResponse> responseEntity =
+            new ResponseEntity<>(getCanadaDollarExchangeRate(), HttpStatus.OK);
+
+        ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
+        when(restTemplate.getForEntity(urlCaptor.capture(), eq(ExchangeRateApiResponse.class)))
+            .thenReturn(responseEntity);
+
+        BigDecimal rate = exchangeRateService.getExchangeRate("Canada-Dollar", txDate);
+
+        assertEquals(new BigDecimal("1.25"), rate);
+        String url = urlCaptor.getValue();
+        assertTrue(url.contains("record_date:gte:" + sixMonthsBefore));
+        assertTrue(url.contains("record_date:lte:" + txDate));
+        assertTrue(url.contains("sort=-record_date"));
     }
 
     private Purchase getTestPurchase() {

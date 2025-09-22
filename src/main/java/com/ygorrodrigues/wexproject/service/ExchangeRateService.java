@@ -56,6 +56,7 @@ public class ExchangeRateService {
                 "?fields=country_currency_desc,exchange_rate,record_date" +
                 "&filter=country_currency_desc:eq:" + countryCurrency +
                 ",record_date:gte:" + sixMonthsBefore.toString() +
+                ",record_date:lte:" + transactionDate.toString() +
                 "&sort=-record_date" +
                 "&page[size]=1" + // Only need the first result, since it is ordered
                 "&page[number]=1";

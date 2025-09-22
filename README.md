@@ -216,6 +216,7 @@ curl "http://localhost:8080/purchase/1/exchange?countryCurrency=Canada-Dollar"
 - Country-Currency Format: Used "Country-Currency" format to handle countries with same currency names
 - The round to 2 decimal places of the converted purchase occurs after the conversion
 - Always sort the newest currency exchange rate so we can get the first result, if none is shown using the last 6 months we return an empty data
+- The currency conversion rate should be equal to or 6 months before the purchase date, cannot use future currencies
 
 ## Additional Resources
 
@@ -223,9 +224,3 @@ curl "http://localhost:8080/purchase/1/exchange?countryCurrency=Canada-Dollar"
 - [H2 Database Documentation](https://www.h2database.com/)
 - [Gradle Documentation](https://gradle.org/docs/)
 - [REST API Best Practices](https://restfulapi.net/)
-
-## TODO
-- Review controller unit tests
-- Add and/or verify test fixtures for currencies, with some that has within 6 months and others dont in the integration test
-- Integration tests using the api?
-- Review how to be a production ready
